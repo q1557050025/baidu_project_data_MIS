@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<style>
+		#tab{
+			width: 550px;
+		}
+	</style>
+</head>
+<body>
+	 <form action="">
+	 	<input type="checkbox" name="select-region" value="华东"><span>华东</span>
+	 	<input type="checkbox" name="select-region" value="华南"><span>华南</span>
+	 	<input type="checkbox" name="select-region" value="华北"><span>华北</span>
+	 	<input type="button" name=" btn-region" value="全选">
+	 </form>
+
+	 <form action="">
+	 	<input type="checkbox" name="select-product" value="手机"><span>手机</span>
+	 	<input type="checkbox" name="select-product" value="笔记本"><span>笔记本</span>
+	 	<input type="checkbox" name="select-product" value="智能音箱"><span>智能音箱</span>
+	 	<input type="button" name="btn-product" value="全选">
+	 </form>
+	
+	<div id="tab">
+		
+	</div>
+
+	<script src="data.js"></script>
+	<script>
+		var oSelectRegion = document.getElementsByName("select-region");
+		console.log(oSelectRegion)
+		console.log(oSelectRegion[0].value)
+	</script>
+
+</body>
+</html>

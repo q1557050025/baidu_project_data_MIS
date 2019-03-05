@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+</head>
+<body>
+	<div id="region-radio-wrapper"></div>
+	<div id="product-radio-wrapper"></div>
+
+	<script src="data.js"></script>
+	<script>
+		var oRegionRadioWrapper = document.getElementById('region-radio-wrapper');
+		var oProductRadioWrapper = document.getElementById('product-radio-wrapper');
+		setCheckBox(oRegionRadioWrapper,[
+			{
+				value:"华东",
+				text:"华东"
+			},
+			{
+				value:"华北",
+				text:"华北"
+			},
+			{
+				value:"华南",
+				text:"华南"
+
+			}
+		]);
+		setCheckBox(oProductRadioWrapper,[
+			{
+				value:"笔记本",
+				text:"笔记本"
+			},
+			{
+				value:"手机",
+				text:"手机"
+			},
+			{
+				value:"智能音箱",
+				text:"智能音箱"
+
+			}
+		])
+		/**
+		 * [setCheckBox 根据给出数组生成chekbox组]
+		 * @param {[type]} container [chekbox容器]
+		 * @param {[type]} arr       [元数组]
+		 */
+		function setCheckBox(container, arr){
+
+			//生成多选checkbox;
+			var oFragment = document.createDocumentFragment();
+			var oLabelAll = createCheckBox("all","多选","all");
+			oFragment.appendChild(oLabelAll);
+
+			//遍历参数对象生成chekbox;
+			for(var i = 0; i < arr.length;i++){
+				var oLabel = createCheckBox(arr[i].value,arr[i].text,"child");
+				oFragment.appendChild(oLabel);
+			};
+
+			// 渲染checkbox至容器container;
+			container.appendChild(oFragment);
+
+			// 给checkbox添加多选功能;
+			container.addEventListener('click', function(e) {
+				if(e.target.getAttribute("checkbox-type") === "all"){
+					for(var i = 0; i < container.childNodes.length; i++){
+						container.childNodes[i].firstChild.checked = e.target.checked;
+					};
+				};
+				if(e.target.getAttribute("checkbox-type") === "child"){
+					var boolean = false;
+					for(var i = 1; i < container.childNodes.length; i++){
+						if(e.target != container.childNodes[i].firstChild){
+							boolean = boolean || container.childNodes[i].firstChild.checked;
+						}
+					};
+					if(!boolean){
+						e.target.checked = true;
+					}
+					var boolean2 = true;
+					for(var i = 1; i < container.childNodes.length; i++){
+						boolean2 = boolean2 && container.childNodes[i].firstChild.checked;
+					};
+					container.childNodes[0].firstChild.checked = boolean2;
+					var newData = getData(oRegionRadioWrapper,sourceData,"region");
+					console.log(newData);
+				};
+			});
+		};
+
+		/**
+		 * [createCheckBox 生成一个checkbox]
+		 * @param  {[type]} value [值]
+		 * @param  {[type]} text  [文本]
+		 * @return {[type]} oLabel[生成的checkbox]
+		 */
+		function createCheckBox(value = null,text,checkboxType){
+			var oCheckBox = document.createElement('input');
+			var oLabel = document.createElement('label');
+			oCheckBox.type = "checkbox";
+			oCheckBox.value = value;
+			oCheckBox.setAttribute("checkbox-type",checkboxType)
+
+			//注意：给元素添加自定义属性只能通过setAttribute();
+			oLabel.appendChild(oCheckBox);
+			oLabel.appendChild(document.createTextNode(text));
+			return oLabel
+		};
+
+
+		function getData(container,sourceData,selectName){
+			var newData = [];
+			for(var i = 1; i < container.childNodes.length; i++){
+				if(container.childNodes[i].firstChild.checked){
+					var value = container.childNodes[i].firstChild.value;
+					console.log(value);
+				};
+				for(var j = 0; j < sourceData.length;j++){
+					if(sourceData[j].selectName === value){
+						newData.push(sourceData[j]);
+					};
+				};
+			};
+			return newData;
+		};
+		
+	</script>
+</body>
+</html>

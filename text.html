@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+</head>
+<body>
+	<div id="wraper">
+		
+	</div>
+	<script>
+		var oWrapper = document.getElementById('wraper');
+		var table = document.createElement('table');
+		table.border = 1;
+		table.width = "80%";
+		var tbody = document.createElement('tbody');
+		var thead = document.createElement('thead');
+		var caption = document.createElement('caption');
+		thead.innerHTML = "我是thead";
+		caption.innerHTML = "caption";
+		table.appendChild(thead);
+		table.appendChild(tbody);
+		table.appendChild(caption);
+		tbody.insertRow(0);
+		for(var i = 0;i<11;i++){
+			tbody.rows[0].insertCell(i);
+			tbody.rows[0].cells[i].innerHTML = "cell 1,"+i;
+		}
+		tbody.rows[0].deleteCell(5);
+		oWrapper.appendChild(table);
+	</script>
+</body>
+</html>
