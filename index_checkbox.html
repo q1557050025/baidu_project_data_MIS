@@ -85,9 +85,11 @@
 						boolean2 = boolean2 && container.childNodes[i].firstChild.checked;
 					};
 					container.childNodes[0].firstChild.checked = boolean2;
+				};
+				if(e.target.type === "checkbox"){
 					var newData = getData(oRegionRadioWrapper,sourceData,"region");
 					console.log(newData);
-				};
+				}
 			});
 		};
 
@@ -110,17 +112,15 @@
 			return oLabel
 		};
 
-
 		function getData(container,sourceData,selectName){
 			var newData = [];
 			for(var i = 1; i < container.childNodes.length; i++){
 				if(container.childNodes[i].firstChild.checked){
-					var value = container.childNodes[i].firstChild.value;
-					console.log(value);
-				};
-				for(var j = 0; j < sourceData.length;j++){
-					if(sourceData[j].selectName === value){
-						newData.push(sourceData[j]);
+					var value = container.childNodes[i].firstChild.value;		
+					for(var j = 0; j < sourceData.length;j++){
+						if(sourceData[j][selectName] === value){
+							newData.push(sourceData[j]);
+						};
 					};
 				};
 			};
