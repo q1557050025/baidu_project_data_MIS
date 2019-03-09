@@ -1,14 +1,16 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
 	<meta charset="UTF-8">
 	<title>Document</title>
 	<style>
-		#tab{
+		#tab {
 			width: 550px;
 		}
 	</style>
 </head>
+
 <body>
 	<select name="region" id="region-select">
 		<option value="华东">华东</option>
@@ -20,94 +22,95 @@
 		<option value="笔记本">笔记本</option>
 		<option value="智能音箱">智能音箱</option>
 	</select>
-	
+
 	<div id="tab">
-		
+
 	</div>
 
 	<script src="data.js"></script>
 	<script>
-			var oTab = document.getElementById('tab');
-			var oTr1 = document.getElementById('tr1');
-			var oSelects = document.getElementsByTagName('select');;
-			var oTab = document.getElementById('tab');
-			//
+		var oTab = document.getElementById('tab');
+		var oTr1 = document.getElementById('tr1');
+		var oSelects = document.getElementsByTagName('select');;
+		var oTab = document.getElementById('tab');
+		//
+		oTab.removeChild(oTab.firstChild);
+		renderTabDiv();
+		oSelects[0].addEventListener('change', function (e) {
 			oTab.removeChild(oTab.firstChild);
 			renderTabDiv();
-			oSelects[0].addEventListener('change', function(e) {
-				oTab.removeChild(oTab.firstChild);
-				renderTabDiv();
-			});
+		});
 
-			oSelects[1].addEventListener('change', function(e) {
-				oTab.removeChild(oTab.firstChild);
-				renderTabDiv();
-			});
+		oSelects[1].addEventListener('change', function (e) {
+			oTab.removeChild(oTab.firstChild);
+			renderTabDiv();
+		});
 
-			/**
-			 * [getData 筛选数据]
-			 * @param  {[type]} n          [条件框索引index]
-			 * @param  {[type]} sourceData [源数据]
-			 * @return {[type]} newData    [数据]
-			 */
-			function getData(n,sourceData){
-				var index = oSelects[n].selectedIndex;
-				var value = oSelects[n][index].value;
-				var newData = [];
-				for(var i = 0; i < sourceData.length;i++){
-					if(sourceData[i][oSelects[n].name] === value){
-						newData.push(sourceData[i]);
-					};
+		/**
+		 * [getData 筛选数据]
+		 * @param  {[type]} n          [条件框索引index]
+		 * @param  {[type]} sourceData [源数据]
+		 * @return {[type]} newData    [数据]
+		 */
+		function getData(n, sourceData) {
+			var index = oSelects[n].selectedIndex;
+			var value = oSelects[n][index].value;
+			var newData = [];
+			for (var i = 0; i < sourceData.length; i++) {
+				if (sourceData[i][oSelects[n].name] === value) {
+					newData.push(sourceData[i]);
 				};
-				return newData;
 			};
+			return newData;
+		};
 
-			/**
-			 * [renderTab 根据选择数据，渲染表格]
-			 * @param  {[type]} newData [数据]
-			 */
-			function renderTab(newData){
-				//生成表格，制作表头;
-				var oTable = document.createElement('table');
-				var oTbody = document.createElement('tbody');
-				var oTHead = oTable.createTHead();
-				oTab.firstChild.appendChild(oTable);
-				oTable.appendChild(oTHead);
-				oTable.appendChild(oTbody);
-				oTable.border = 1;
-				oTHead.insertRow(0);
-				oTHead.rows[0].insertCell(0);
-				oTHead.rows[0].cells[0].innerHTML = "product"
-				oTHead.rows[0].insertCell(1);
-				oTHead.rows[0].cells[1].innerHTML = "region"
-				for(var i = 1 ; i < 13;i++){
-					oTHead.rows[0].insertCell(i+1);
-					oTHead.rows[0].cells[i+1].innerHTML = i + "月";
-				};
-				//获取数据，制作表体；
-				for(var i = 0 ; i < newData.length;i++){
-					oTbody.insertRow(i);
-					oTbody.rows[i].insertCell(0);
-					oTbody.rows[i].cells[0].innerHTML = newData[i].product;
-					oTbody.rows[i].insertCell(1);
-					oTbody.rows[i].cells[1].innerHTML = newData[i].region;
-					for(var j = 2;j < 14; j ++){
-						oTbody.rows[i].insertCell(j);
-						oTbody.rows[i].cells[j].innerHTML = newData[i].sale[j-2];
-					}
+		/**
+		 * [renderTab 根据选择数据，渲染表格]
+		 * @param  {[type]} newData [数据]
+		 */
+		function renderTab(newData) {
+			//生成表格，制作表头;
+			var oTable = document.createElement('table');
+			var oTbody = document.createElement('tbody');
+			var oTHead = oTable.createTHead();
+			oTab.firstChild.appendChild(oTable);
+			oTable.appendChild(oTHead);
+			oTable.appendChild(oTbody);
+			oTable.border = 1;
+			oTHead.insertRow(0);
+			oTHead.rows[0].insertCell(0);
+			oTHead.rows[0].cells[0].innerHTML = "product"
+			oTHead.rows[0].insertCell(1);
+			oTHead.rows[0].cells[1].innerHTML = "region"
+			for (var i = 1; i < 13; i++) {
+				oTHead.rows[0].insertCell(i + 1);
+				oTHead.rows[0].cells[i + 1].innerHTML = i + "月";
+			};
+			//获取数据，制作表体；
+			for (var i = 0; i < newData.length; i++) {
+				oTbody.insertRow(i);
+				oTbody.rows[i].insertCell(0);
+				oTbody.rows[i].cells[0].innerHTML = newData[i].product;
+				oTbody.rows[i].insertCell(1);
+				oTbody.rows[i].cells[1].innerHTML = newData[i].region;
+				for (var j = 2; j < 14; j++) {
+					oTbody.rows[i].insertCell(j);
+					oTbody.rows[i].cells[j].innerHTML = newData[i].sale[j - 2];
 				}
-			};
-
-			/**
-			 * [renderTabDiv 渲染所有表格]
-			 */
-			function renderTabDiv(){
-				var oTabWrapper = document.createElement('div');
-				oTab.appendChild(oTabWrapper);
-				renderTab(getData(0,sourceData));
-				renderTab(getData(1,getData(0,sourceData)));
 			}
+		};
+
+		/**
+		 * [renderTabDiv 渲染所有表格]
+		 */
+		function renderTabDiv() {
+			var oTabWrapper = document.createElement('div');
+			oTab.appendChild(oTabWrapper);
+			renderTab(getData(0, sourceData));
+			renderTab(getData(1, getData(0, sourceData)));
+		}
 	</script>
 
 </body>
+
 </html>

@@ -39,9 +39,13 @@
 			{
 				value:"智能音箱",
 				text:"智能音箱"
-
 			}
-		])
+		]);
+		//为源数据子项添加索引属性，作为唯一识别符；
+		for(var i = 0; i < sourceData.length; i++){
+			sourceData[i]["index"] = i;
+		};
+
 		/**
 		 * [setCheckBox 根据给出数组生成chekbox组]
 		 * @param {[type]} container [chekbox容器]
@@ -65,11 +69,14 @@
 
 			// 给checkbox添加多选功能;
 			container.addEventListener('click', function(e) {
+
+				//点击“全选”时；
 				if(e.target.getAttribute("checkbox-type") === "all"){
 					for(var i = 0; i < container.childNodes.length; i++){
 						container.childNodes[i].firstChild.checked = e.target.checked;
 					};
 				};
+				//点击子选框时；
 				if(e.target.getAttribute("checkbox-type") === "child"){
 					var boolean = false;
 					for(var i = 1; i < container.childNodes.length; i++){
@@ -77,19 +84,17 @@
 							boolean = boolean || container.childNodes[i].firstChild.checked;
 						}
 					};
+					//唯一选项时；
 					if(!boolean){
 						e.target.checked = true;
-					}
+					};
+					//全选时；
 					var boolean2 = true;
 					for(var i = 1; i < container.childNodes.length; i++){
 						boolean2 = boolean2 && container.childNodes[i].firstChild.checked;
 					};
 					container.childNodes[0].firstChild.checked = boolean2;
 				};
-				if(e.target.type === "checkbox"){
-					var newData = getData(oRegionRadioWrapper,sourceData,"region");
-					console.log(newData);
-				}
 			});
 		};
 
@@ -112,6 +117,13 @@
 			return oLabel
 		};
 
+		/**
+		 * [getData 筛选数据]
+		 * @param  {[type]} container  [条件容器]
+		 * @param  {[type]} sourceData [源书]
+		 * @param  {[type]} selectName [条件名]
+		 * @return {[type]}            [description]
+		 */
 		function getData(container,sourceData,selectName){
 			var newData = [];
 			for(var i = 1; i < container.childNodes.length; i++){
@@ -126,7 +138,54 @@
 			};
 			return newData;
 		};
-		
+
+		/**
+		 * [renderTab 渲染表格]
+		 * @param  {[type]} newData   [元数据数组]
+		 * @param  {[type]} container [表格容器]
+		 * @param  {[type]} col1      [第一列名]
+		 * @param  {[type]} col2      [第二列名]
+		 */
+		function renderTab(newData,container,col1,col2){
+			//生成表格，制作表头;
+			var oTable = document.createElement('table');
+			var oTbody = document.createElement('tbody');
+			container.firstChild.appendChild(oTable);
+			oTable.appendChild(oTHead);
+			oTable.appendChild(oTbody);
+			oTable.border = 1;
+			oTHead.insertRow(0);
+			oTHead.rows[0].insertCell(0);
+			oTHead.rows[0].cells[0].innerHTML = col1
+			oTHead.rows[0].insertCell(1);
+			oTHead.rows[0].cells[1].innerHTML = col2
+			for(var i = 1 ; i < 13;i++){
+				oTHead.rows[0].insertCell(i+1);
+				oTHead.rows[0].cells[i+1].innerHTML = i + "月";
+			};
+			//获取数据，制作表体；
+			for(var i = 0 ; i < newData.length;i++){
+				oTbody.insertRow(i);
+				oTbody.rows[i].insertCell(0);
+				oTbody.rows[i].cells[0].innerHTML = newData[i].col1;
+				oTbody.rows[i].insertCell(1);
+				oTbody.rows[i].cells[1].innerHTML = newData[i].col2;
+				for(var j = 2;j < 14; j ++){
+					oTbody.rows[i].insertCell(j);
+					oTbody.rows[i].cells[j].innerHTML = newData[i].sale[j-2];
+				}
+			}
+		};
+
+		function chooseCol(container1,container2){
+			
+		};
+
+		function boolSelect(){
+			
+		};
+
+		chooseCol(oRegionRadioWrapper,oProductRadioWrapper);
 	</script>
 </body>
 </html>

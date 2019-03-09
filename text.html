@@ -9,25 +9,36 @@
 		
 	</div>
 	<script>
-		var oWrapper = document.getElementById('wraper');
-		var table = document.createElement('table');
-		table.border = 1;
-		table.width = "80%";
-		var tbody = document.createElement('tbody');
-		var thead = document.createElement('thead');
-		var caption = document.createElement('caption');
-		thead.innerHTML = "我是thead";
-		caption.innerHTML = "caption";
-		table.appendChild(thead);
-		table.appendChild(tbody);
-		table.appendChild(caption);
-		tbody.insertRow(0);
-		for(var i = 0;i<11;i++){
-			tbody.rows[0].insertCell(i);
-			tbody.rows[0].cells[i].innerHTML = "cell 1,"+i;
-		}
-		tbody.rows[0].deleteCell(5);
-		oWrapper.appendChild(table);
+		//硬绑定
+		{function foo(){
+			console.log(this.a);
+		};
+
+		let obj = {
+			a:2,
+			foo:foo
+		};
+
+		let a = "global"
+
+		setTimeout(obj.foo.call(obj), 100);}
+		//创建包裹函数；
+		{
+			function foo(something){
+			console.log(this.a, something);
+			return this.a + something;
+		};
+
+		let obj = {
+			a:2
+		};
+
+		let bar = function(){
+			return foo.apply(obj, arguments);
+		};
+
+		let b = bar(3);
+		console.log(b);}
 	</script>
 </body>
 </html>
