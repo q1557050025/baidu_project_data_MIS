@@ -1,44 +1,157 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
 	<meta charset="UTF-8">
 	<title>Document</title>
 </head>
+
 <body>
-	<div id="wraper">
-		
+	<div id="wrapper"><table border="1">
+			<thead>
+				<tr>
+					<td>region</td>
+					<td>product</td>
+					<td>1月</td>
+					<td>2月</td>
+					<td>3月</td>
+					<td>4月</td>
+					<td>5月</td>
+					<td>6月</td>
+					<td>7月</td>
+					<td>8月</td>
+					<td>9月</td>
+					<td>10月</td>
+					<td>11月</td>
+					<td>12月</td>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td>华南</td>
+					<td>智能音箱</td>
+					<td>10</td>
+					<td>40</td>
+					<td>10</td>
+					<td>6</td>
+					<td>5</td>
+					<td>6</td>
+					<td>8</td>
+					<td>6</td>
+					<td>6</td>
+					<td>6</td>
+					<td>7</td>
+					<td>26</td>
+				</tr>
+				<tr>
+					<td>华南</td>
+					<td>笔记本</td>
+					<td>80</td>
+					<td>120</td>
+					<td>130</td>
+					<td>140</td>
+					<td>70</td>
+					<td>75</td>
+					<td>120</td>
+					<td>90</td>
+					<td>550</td>
+					<td>120</td>
+					<td>110</td>
+					<td>100</td>
+				</tr>
+				<tr>
+					<td>华南</td>
+					<td>手机</td>
+					<td>220</td>
+					<td>200</td>
+					<td>240</td>
+					<td>250</td>
+					<td>260</td>
+					<td>270</td>
+					<td>280</td>
+					<td>295</td>
+					<td>310</td>
+					<td>335</td>
+					<td>355</td>
+					<td>380</td>
+				</tr>
+				<tr>
+					<td>华北</td>
+					<td>手机</td>
+					<td>80</td>
+					<td>70</td>
+					<td>90</td>
+					<td>110</td>
+					<td>130</td>
+					<td>145</td>
+					<td>150</td>
+					<td>160</td>
+					<td>170</td>
+					<td>185</td>
+					<td>190</td>
+					<td>200</td>
+				</tr>
+				<tr>
+					<td>华北</td>
+					<td>笔记本</td>
+					<td>30</td>
+					<td>35</td>
+					<td>50</td>
+					<td>70</td>
+					<td>20</td>
+					<td>15</td>
+					<td>30</td>
+					<td>50</td>
+					<td>710</td>
+					<td>130</td>
+					<td>20</td>
+					<td>20</td>
+				</tr>
+				<tr>
+					<td>华东</td>
+					<td>手机</td>
+					<td>120</td>
+					<td>100</td>
+					<td>140</td>
+					<td>160</td>
+					<td>180</td>
+					<td>185</td>
+					<td>190</td>
+					<td>210</td>
+					<td>230</td>
+					<td>245</td>
+					<td>255</td>
+					<td>270</td>
+				</tr>
+				<tr>
+					<td>华东</td>
+					<td>笔记本</td>
+					<td>50</td>
+					<td>60</td>
+					<td>80</td>
+					<td>110</td>
+					<td>30</td>
+					<td>20</td>
+					<td>70</td>
+					<td>30</td>
+					<td>420</td>
+					<td>30</td>
+					<td>20</td>
+					<td>20</td>
+				</tr>
+			</tbody>
+		</table>
 	</div>
+	<input type="checkbox">
 	<script>
-		//硬绑定
-		{function foo(){
-			console.log(this.a);
-		};
-
-		let obj = {
-			a:2,
-			foo:foo
-		};
-
-		let a = "global"
-
-		setTimeout(obj.foo.call(obj), 100);}
-		//创建包裹函数；
-		{
-			function foo(something){
-			console.log(this.a, something);
-			return this.a + something;
-		};
-
-		let obj = {
-			a:2
-		};
-
-		let bar = function(){
-			return foo.apply(obj, arguments);
-		};
-
-		let b = bar(3);
-		console.log(b);}
+		for(var i = 0; i < 10;i++){
+			for(var j = 0; j < 10 ; j ++){
+				console.log("i:",i)
+				console.log("j:",j)
+				i++
+			}
+		}
 	</script>
 </body>
+
 </html>
