@@ -4,15 +4,22 @@
 <head>
 	<meta charset="UTF-8">
 	<title>Document</title>
+	<style>
+		#canvas {
+			border: solid 1px black;
+			margin-top: 40px;
+		}
+	</style>
 </head>
 
-<body>
+<body onload="draw()">
 	<div id="region-radio-wrapper"></div>
 	<div id="product-radio-wrapper"></div>
 	<div id="tab-wrapper"></div>
-
+	<canvas id="canvas" width="800px" height="400px"></canvas>
 	<script src="data.js"></script>
 	<script>
+		//绘制表格；
 		var oRegionRadioWrapper = document.getElementById('region-radio-wrapper');
 		var oProductRadioWrapper = document.getElementById('product-radio-wrapper');
 		var oTab = document.getElementById("tab-wrapper");
@@ -51,6 +58,7 @@
 			var arr3 = arr1.concat(arr2);
 			arr3 = unique(arr3);
 			renderTab(arr3, oTab, "region", "product");
+			ggg()
 		})
 
 		document.addEventListener("click", function (e) {
@@ -217,24 +225,20 @@
 			}
 			// 合并重复单元格
 			function mergeCells() {
-				for(var i = 0,row = oTbody.rows;i <row.length;i++ ){
+				for (var i = 0, row = oTbody.rows; i < row.length; i++) {
 					var q = 1;
-					for(var j = i+1;j < row.length;j++){
-						if(row[i].cells[0].innerHTML === row[j].cells[0].innerHTML){
+					for (var j = i + 1; j < row.length; j++) {
+						if (row[i].cells[0].innerHTML === row[j].cells[0].innerHTML) {
 							row[j].cells[0].style.display = "none";
 							q++;
 						}
 					}
-					row[i].cells[0].setAttribute("rowspan",q);
+					row[i].cells[0].setAttribute("rowspan", q);
 				}
 			}
 
 			mergeCells();
-			
-			console.log(oTbody.rows[0].cells[0]);
-			console.log(oTbody.rows[1].cells[0]);
-			console.log(oTbody.rows[2].cells[0]);
-			console.log(oTbody.rows[3].cells[0]);
+
 		}
 
 		/**
@@ -267,6 +271,55 @@
 				res.includes(element) ? '' : res.push(element);
 			});
 			return res;
+		}
+	</script>
+	<script>
+		//绘制折线图；
+		/**
+		 * @description: 绘制折线图 
+		 */
+		function draw() {
+			var canvas = document.getElementById("canvas");
+			if (canvas.getContext) {
+				var ctx = canvas.getContext('2d');
+
+				drawLine(100, 100, 100, 300);
+				drawLine(100, 300, 700, 300);
+
+				function drawLine(x, y, m, n, color = "black") {
+					ctx.beginPath();
+					ctx.moveTo(x, y);
+					ctx.lineTo(m, n);
+					ctx.strokeStyle = color;
+					ctx.stroke();
+					ctx.closePath();
+				}
+
+				function drawPoint(x, y) {
+					ctx.beginPath();
+					ctx.moveTo(x + 5, y);
+					ctx.arc(x, y, 5, 0, Math.PI * 2, true);
+					ctx.fill();
+				}
+			}
+		}
+
+		function ggg() {
+			var oTabWrapper = document.getElementById("tab-wrapper");
+			var oTbody = oTabWrapper.getElementsByTagName("tbody")[0];
+			var a = colData(oTbody.rows[3])
+			console.log(a);
+		}
+
+		function colData(row) {
+			var arr = [];
+			for (var i = 2; i < row.cells.length; i++) {
+				arr.push(Number(row.cells[i].innerHTML));
+			}
+			arr.sort(function(a,b){
+				return b - a;
+			})
+			return arr;
 		}
 	</script>
 </body>

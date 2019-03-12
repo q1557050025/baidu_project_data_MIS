@@ -1,0 +1,19 @@
+<svg width="300" height="200" 
+    baseProfile="full"
+     viewBox="" version="1.1"
+     xmlns="http://www.w3.org/2000/svg"
+     xmlns:xlink="http://www.w3.org/1999/xlink">
+    
+    <rect x="" y="" width="100%" height="100%" style="" fill="red"/>
+
+    <circle cx="150" cy="100" r="80" style="" fill="green" />
+
+    <text x="150"  y="125" style="" font-size="60" fill="white" text-anchor="middle" >SVG</text>
+
+    <polyline points="60 110 65 120 70 115 75 130 80 125 85 140 90 135 95 150 100 145"
+      stroke="orange" fill="transparent" stroke-width="5"/>
+
+       <polygon points="50 160 55 180 70 180 60 190 65 205 50 195 35 205 40 190 30 180 45 180"
+      stroke="green" fill="transparent" stroke-width="5"/>
+
+</svg>

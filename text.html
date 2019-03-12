@@ -144,13 +144,10 @@
 	</div>
 	<input type="checkbox">
 	<script>
-		for(var i = 0; i < 10;i++){
-			for(var j = 0; j < 10 ; j ++){
-				console.log("i:",i)
-				console.log("j:",j)
-				i++
-			}
-		}
+		
+		var oTabWrapper = document.getElementById("wrapper");
+		var oTbody = oTabWrapper.getElementsByTagName("tbody");
+		console.log(oTbody)
 	</script>
 </body>
 
