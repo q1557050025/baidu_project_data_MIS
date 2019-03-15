@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<title>Document</title>
+</head>
+
+<body>
+	<div id="regionCheckbox"></div>
+	<div id="productCheckbox"></div>
+	<div id="tab-wrapper"></div>
+	<script src="data.js"></script>
+	<script>
+		//Checkbox类,创建一组checkbox选项框
+		var Checkbox = function (arrs, id) {
+			var init,create,set,strategies,id = id;
+			var div = document.getElementById(id);
+			init = function () { //初始化Checkbox实例
+				div.appendChild(this.create('全选', 'all'));
+				for (var i = 0, arr; arr = arrs[i++];) {
+					div.appendChild(this.create(arr, 'child'));
+				};
+				set();
+			};
+
+			create = function (value, checkType) {//创建一个checkbox选项框
+				var label = document.createElement('label');
+				var ipt = document.createElement('input');
+				ipt.type = 'checkbox';
+				ipt.value = value;
+				ipt.checked = 'true';
+				label.appendChild(ipt);
+				label.appendChild(document.createTextNode(value));
+				ipt.setAttribute('check-type', checkType);
+				return label;
+			};
+			set = function () {//监听checkbox组,添加全选功能等;
+				div.addEventListener('click', function (e) {
+					var checkType = e.target.getAttribute('check-type');
+					if (checkType) {
+						strategies[checkType](e);
+					}
+				})
+			};
+			strategies = {//策略组,点击all选项和点击child选项不同逻辑
+				'all': function (e) {
+					for (let i = 1, childNode; childNode = div.childNodes[i++];) {
+						childNode.firstChild.checked = e.target.checked;
+					};
+					div.childNodes[1].firstChild.checked = true;
+				},
+				'child': function (e) {
+					var count = 0;
+					for (let i = 1, childNode; childNode = div.childNodes[i++];) {
+						if (childNode.firstChild.checked === true) {
+							count++;
+						}
+					}
+					if (count === 0) {
+						e.target.checked = true;
+						div.childNodes[0].firstChild.checked = false;
+					} else if (count === div.childNodes.length - 1) {
+						div.childNodes[0].firstChild.checked = true;
+					} else {
+						div.childNodes[0].firstChild.checked = false;
+					}
+				}
+			}
+			return {
+				init: init,
+				create: create,
+				set: set,
+				strategies: strategies,
+				id: id
+			};
+		};
+		//实例checkbox;
+		var regionCheckbox = new Checkbox(['华东', '华北', '华南'], 'regionCheckbox');
+		var productCheckbox = new Checkbox(['手机', '笔记本', '智能音箱'], 'productCheckbox');
+		regionCheckbox.init();//初始化
+		productCheckbox.init();//初始化
+
+		//dom共享池;
+		var objPoolFactory = function(createObjFn){
+			var objPool = document.createDocumentFragment();
+			return{
+				create: function() {
+					var obj = objPool.childNodes.length === 0 ? createObjFn.apply(this, arguments):objPool.childNodes[0];
+					return obj;
+				},
+				recover: function(obj){
+					objPool.appendChild(obj);
+				}
+			}
+		};
+
+		var Tab = function() {
+			var init, create, data, set, strategies;
+			console.log(objPoolFactory)
+			var oTabWrapper = document.getElementById('tab-wrapper');
+			var tabFactory = objPoolFactory(function(){
+				var table = document.createElement('table')
+				table.border = '1px solid black'
+				return table;
+			});
+			var trFactory = objPoolFactory(function() {
+				var tr = document.createElement('tr');
+				var td = document.createElement('td');
+			})
+			init = function() {
+				table = create();
+				console.log(table);
+			};
+			create = function() {
+				var table = tabFactory.create();
+				return table;
+			}
+
+			return {
+			init:init,
+			create:create,
+			data:data,
+			set:set,
+			strategies:strategies
+			}
+		}
+		//实例化Tab
+		var tab = new Tab();
+		tab.init();
+
+
+	</script>
+</body>
+
+</html>
